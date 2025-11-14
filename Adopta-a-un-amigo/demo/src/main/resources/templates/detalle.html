@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Detalle Mascota</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>Detalle de la Mascota</h1>
+
+      <p><strong>ID:</strong> <span th:text="${mascota.id}"></span></p>
+      <p><strong>Nombre:</strong> <span th:text="${mascota.nombre}"></span></p>
+      <p><strong>Edad:</strong> <span th:text="${mascota.edad}"></span> años</p>
+      <p>
+        <strong>Especie:</strong> <span th:text="${mascota.especie}"></span>
+      </p>
+      <p>
+        <strong>Estado:</strong>
+        <span th:if="${mascota.adoptado}" class="badge adoptado">Adoptado</span>
+        <span th:unless="${mascota.adoptado}" class="badge disponible"
+          >Disponible</span
+        >
+      </p>
+      <p th:if="${mascota.descripcion}">
+        <strong>Descripción:</strong>
+        <span th:text="${mascota.descripcion}"></span>
+      </p>
+
+      <div class="enlaces">
+        <a
+          th:href="@{/mascotas/{id}/editar(id=${mascota.id})}"
+          class="btn-enlace"
+          >✏️ Editar</a
+        >
+        <a href="/mascotas" class="btn-enlace">Volver al listado</a>
+        <a href="/mascotas/nueva" class="btn-enlace">Nueva mascota</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,294 @@
+/* ============================================
+   ESTILOS GENERALES
+   ============================================ */
+
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  margin: 10px 0;
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL (TARJETA)
+   ============================================ */
+
+.contenedor {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* ============================================
+   FORMULARIOS
+   ============================================ */
+
+div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+
+/* Estilo base para todos los botones */
+button {
+  padding: 10px;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Botones de formulario (ancho completo) */
+button[type="submit"] {
+  width: 100%;
+  font-size: 16px;
+}
+
+/* Botón de edición (azul) */
+.btn-editar {
+  background-color: #2196f3;
+  width: 100%;
+}
+
+.btn-editar:hover {
+  background-color: #0b7dda;
+}
+
+/* Botón de eliminar (rojo) */
+.btn-eliminar {
+  background-color: #f44336;
+  padding: 5px 10px;
+  width: auto;
+  min-width: 80px;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+.btn-eliminar:hover {
+  background-color: #da190b;
+}
+
+/* Botón para registrar nueva mascota */
+.btn-nuevo {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  width: auto;
+}
+
+.btn-nuevo:hover {
+  background-color: #45a049;
+}
+
+/* Botón limpiar búsqueda */
+.btn-limpiar {
+  background-color: #666;
+}
+
+.btn-limpiar:hover {
+  background-color: #555;
+}
+
+/* ============================================
+   ENLACES CON ESTILO DE BOTÓN
+   ============================================ */
+
+/* Estilo para enlaces que parecen botones */
+a.btn-enlace {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #2196f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 0.9em;
+  margin: 0 3px;
+}
+
+a.btn-enlace:hover {
+  background-color: #0b7dda;
+}
+
+/* ============================================
+   MENSAJES DE VALIDACIÓN
+   ============================================ */
+
+.error {
+  color: #d32f2f;
+  font-size: 0.9em;
+  display: block;
+  margin-top: 5px;
+}
+
+/* ============================================
+   NAVEGACIÓN Y ENLACES
+   ============================================ */
+
+.enlace,
+.enlaces {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.enlaces a.btn-enlace,
+.enlace a.btn-enlace {
+  margin: 0 5px;
+}
+
+/* ============================================
+   BADGES DE ESTADO
+   ============================================ */
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 3px;
+  color: white;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+/* Badge verde para mascotas adoptadas */
+.adoptado {
+  background-color: #4caf50;
+}
+
+/* Badge naranja para mascotas disponibles */
+.disponible {
+  background-color: #ff9800;
+}
+
+/* ============================================
+   TABLAS
+   ============================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Formularios dentro de celdas de tabla */
+td form {
+  display: inline-block;
+  margin: 0;
+}
+
+/* Limitar ancho de botón eliminar en tabla */
+td .btn-eliminar {
+  display: inline-block;
+  width: auto;
+  min-width: 80px;
+}
+
+/* ============================================
+   CAJA DE BÚSQUEDA Y FILTROS
+   ============================================ */
+
+.caja-busqueda {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.caja-busqueda form {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+}
+
+.caja-busqueda input,
+.caja-busqueda select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.caja-busqueda button {
+  padding: 8px 15px;
+  background-color: #2196f3;
+  width: auto;
+}
+
+.caja-busqueda button:hover {
+  background-color: #0b7dda;
+}
+
+/* ============================================
+   MENSAJES DE ESTADO VACÍO
+   ============================================ */
+
+.vacio {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.vacio a {
+  color: #2196f3;
+  text-decoration: underline;
+}
+
+.vacio a:hover {
+  color: #0b7dda;
+}

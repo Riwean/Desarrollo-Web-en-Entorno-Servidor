@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Editar Mascota</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>Editar Mascota</h1>
+
+      <form
+        th:action="@{/mascotas/{id}(id=${mascota.id})}"
+        th:object="${mascota}"
+        method="post"
+      >
+        <div>
+          <label>ID: <span th:text="${mascota.id}"></span></label>
+        </div>
+
+        <div>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" th:field="*{nombre}" />
+          <span
+            class="error"
+            th:if="${#fields.hasErrors('nombre')}"
+            th:errors="*{nombre}"
+          ></span>
+        </div>
+
+        <div>
+          <label for="edad">Edad:</label>
+          <input type="number" id="edad" th:field="*{edad}" />
+          <span
+            class="error"
+            th:if="${#fields.hasErrors('edad')}"
+            th:errors="*{edad}"
+          ></span>
+        </div>
+
+        <div>
+          <label for="especie">Especie:</label>
+          <select id="especie" th:field="*{especie}">
+            <option value="">-- Selecciona --</option>
+            <option value="perro">Perro</option>
+            <option value="gato">Gato</option>
+            <option value="otro">Otro</option>
+          </select>
+          <span
+            class="error"
+            th:if="${#fields.hasErrors('especie')}"
+            th:errors="*{especie}"
+          ></span>
+        </div>
+
+        <div>
+          <label for="descripcion">Descripción:</label>
+          <textarea
+            id="descripcion"
+            th:field="*{descripcion}"
+            rows="3"
+          ></textarea>
+          <span
+            class="error"
+            th:if="${#fields.hasErrors('descripcion')}"
+            th:errors="*{descripcion}"
+          ></span>
+        </div>
+
+        <div>
+          <label>
+            <input type="checkbox" th:field="*{adoptado}" />
+            ¿Ya está adoptado?
+          </label>
+        </div>
+
+        <button type="submit" class="btn-editar">Actualizar Mascota</button>
+      </form>
+
+      <div class="enlace">
+        <a th:href="@{/mascotas/{id}(id=${mascota.id})}" class="btn-enlace"
+          >Cancelar</a
+        >
+        <a href="/mascotas" class="btn-enlace">Ver listado</a>
+      </div>
+    </div>
+  </body>
+</html>

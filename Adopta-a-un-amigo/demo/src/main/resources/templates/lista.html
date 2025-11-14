@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Listado de Mascotas</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>Listado de Mascotas</h1>
+
+      <a href="/mascotas/nueva" class="btn-nuevo">+ Registrar nueva mascota</a>
+
+      <!-- Formulario de búsqueda y filtros -->
+      <div class="caja-busqueda">
+        <form action="/mascotas" method="get">
+          <div>
+            <label for="nombre">Buscar por nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              th:value="${nombreBusqueda}"
+              placeholder="Nombre de la mascota"
+            />
+          </div>
+
+          <div>
+            <label for="especie">Filtrar por especie:</label>
+            <select id="especie" name="especie">
+              <option value="">Todas</option>
+              <option value="perro" th:selected="${especieFiltro == 'perro'}">
+                Perro
+              </option>
+              <option value="gato" th:selected="${especieFiltro == 'gato'}">
+                Gato
+              </option>
+              <option value="otro" th:selected="${especieFiltro == 'otro'}">
+                Otro
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <button type="submit">🔍 Buscar</button>
+            <a href="/mascotas"
+              ><button type="button" class="btn-limpiar">Limpiar</button></a
+            >
+          </div>
+        </form>
+      </div>
+
+      <div th:if="${mascotas != null and !mascotas.isEmpty()}">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Especie</th>
+              <th>Edad</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="mascota : ${mascotas}">
+              <td th:text="${mascota.id}"></td>
+              <td th:text="${mascota.nombre}"></td>
+              <td th:text="${mascota.especie}"></td>
+              <td th:text="${mascota.edad}"></td>
+              <td>
+                <span th:if="${mascota.adoptado}" class="badge adoptado"
+                  >Adoptado</span
+                >
+                <span th:unless="${mascota.adoptado}" class="badge disponible"
+                  >Disponible</span
+                >
+              </td>
+              <td>
+                <a
+                  th:href="@{/mascotas/{id}(id=${mascota.id})}"
+                  class="btn-enlace"
+                  >Ver</a
+                >
+                <a
+                  th:href="@{/mascotas/{id}/editar(id=${mascota.id})}"
+                  class="btn-enlace"
+                  >Editar</a
+                >
+
+                <form
+                  th:action="@{/mascotas/{id}/eliminar(id=${mascota.id})}"
+                  method="post"
+                  style="display: inline; margin: 0"
+                  onsubmit="return confirm('¿Estás seguro de eliminar esta mascota?');"
+                >
+                  <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div th:if="${mascotas == null or mascotas.isEmpty()}" class="vacio">
+        <p>No se encontraron mascotas con los criterios de búsqueda.</p>
+        <a href="/mascotas">Ver todas las mascotas</a>
+      </div>
+    </div>
+  </body>
+</html>
