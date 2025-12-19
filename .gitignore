@@ -42,3 +42,9 @@ Thumbs.db
 *.tmp 
 *.bak 
 *.swp 
+
+# Application properties con credenciales sensibles
+application.properties
+application.yml
+application-*.properties
+application-*.yml
