@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex - Búsqueda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .contenedor {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+        }
+        .formulario {
+            margin: 30px 0;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #ffe6e6;
+            border-radius: 5px;
+        }
+        .enlace-lista {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .enlace-lista:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="contenedor">
+    <h1>🔴 Pokédex 🔴</h1>
+
+    <div class="formulario">
+        <form action="/buscar" method="get">
+            <input type="text" name="nombreOId" placeholder="Escribe el nombre o ID del Pokémon (ej: pikachu, 25)" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div th:if="${error}" class="error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <a href="/lista" class="enlace-lista">📋 Ver lista de los primeros 20 Pokémon</a>
+</div>
+</body>
+</html>
