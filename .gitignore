@@ -19,7 +19,7 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
 
@@ -43,8 +43,12 @@ Thumbs.db
 *.bak 
 *.swp 
 
-# Application properties con credenciales sensibles
-application.properties
-application.yml
-application-*.properties
-application-*.yml
+# ARCHIVOS SENSIBLES
+.env
+application-local.properties
+application-prod.properties
+*-credentials.properties
+*.env
+
+# Excepción: SÍ subir el application.properties base (sin credenciales)
+!src/main/resources/application.properties
