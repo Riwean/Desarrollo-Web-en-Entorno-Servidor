@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroides Peligrosos - NASA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .estrellas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .estrella {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: parpadear 3s infinite;
+        }
+
+        @keyframes parpadear {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .estrella:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .estrella:nth-child(2) { top: 20%; left: 80%; animation-delay: 0.5s; }
+        .estrella:nth-child(3) { top: 30%; left: 40%; animation-delay: 1s; }
+        .estrella:nth-child(4) { top: 40%; left: 70%; animation-delay: 1.5s; }
+        .estrella:nth-child(5) { top: 50%; left: 15%; animation-delay: 2s; }
+        .estrella:nth-child(6) { top: 60%; left: 90%; animation-delay: 0.3s; }
+        .estrella:nth-child(7) { top: 70%; left: 35%; animation-delay: 1.2s; }
+        .estrella:nth-child(8) { top: 80%; left: 60%; animation-delay: 0.8s; }
+        .estrella:nth-child(9) { top: 15%; left: 50%; animation-delay: 2.5s; }
+        .estrella:nth-child(10) { top: 25%; left: 10%; animation-delay: 1.8s; }
+        .estrella:nth-child(11) { top: 35%; left: 85%; animation-delay: 0.6s; }
+        .estrella:nth-child(12) { top: 45%; left: 25%; animation-delay: 2.2s; }
+        .estrella:nth-child(13) { top: 55%; left: 75%; animation-delay: 1.4s; }
+        .estrella:nth-child(14) { top: 65%; left: 45%; animation-delay: 0.9s; }
+        .estrella:nth-child(15) { top: 75%; left: 5%; animation-delay: 2.7s; }
+        .estrella:nth-child(16) { top: 85%; left: 95%; animation-delay: 1.1s; }
+        .estrella:nth-child(17) { top: 12%; left: 65%; animation-delay: 0.4s; }
+        .estrella:nth-child(18) { top: 22%; left: 30%; animation-delay: 1.9s; }
+        .estrella:nth-child(19) { top: 32%; left: 55%; animation-delay: 2.3s; }
+        .estrella:nth-child(20) { top: 42%; left: 88%; animation-delay: 0.7s; }
+
+        .estrella:nth-child(5n) {
+            width: 3px;
+            height: 3px;
+        }
+
+        .contenedor {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 30px 0;
+        }
+
+        .tarjeta {
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .encabezado-tarjeta {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        .boton-cerrar-sesion {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .boton-cerrar-sesion:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .boton-consultar {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .boton-consultar:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .boton-historial {
+            background: transparent;
+            border: 2px solid #6c757d;
+            color: #6c757d;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .boton-historial:hover {
+            background: #6c757d;
+            border-color: #6c757d;
+            color: white;
+            box-shadow: 0 0 15px rgba(108, 117, 125, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+    </style>
+</head>
+<body>
+<!-- Estrellas de fondo -->
+<div class="estrellas">
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+</div>
+
+<div class="container contenedor">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6">
+            <div class="card tarjeta">
+                <div class="card-header encabezado-tarjeta text-center py-4">
+                    <div class="d-flex justify-content-end mb-2">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit" class="btn btn-sm boton-cerrar-sesion">
+                                Cerrar Sesión
+                            </button>
+                        </form>
+                    </div>
+                    <h2 class="mb-0">Asteroides Peligrosos</h2>
+                    <p class="mb-0 mt-2">Consulta de Objetos Cercanos a la Tierra</p>
+                </div>
+                <div class="card-body p-4">
+
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> <span th:text="${error}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <!-- Texto introductorio -->
+                    <div class="mb-4">
+                        <p class="text-muted">
+                            Esta aplicación consulta la base de datos de la NASA (NeoWs) para mostrar
+                            asteroides que se acercan a la Tierra en una fecha específica y que son
+                            considerados <strong>potencialmente peligrosos</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Formulario -->
+                    <form action="/consultar" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div class="mb-4">
+                            <label for="fecha" class="form-label">
+                                <strong>Selecciona una fecha:</strong>
+                            </label>
+                            <input
+                                    type="date"
+                                    class="form-control form-control-lg"
+                                    id="fecha"
+                                    name="fecha"
+                                    required
+                                    th:max="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                            >
+                            <div class="form-text">
+                                Consulta asteroides hasta la fecha actual
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn boton-consultar btn-lg">
+                                Consultar Asteroides
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Botón de historial -->
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="/historial" class="btn boton-historial">
+                            Ver Historial de Consultas
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>Datos proporcionados por NASA NeoWs API</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Asteroides Peligrosos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow-x: hidden;
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .estrellas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .estrella {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: parpadear 3s infinite;
+        }
+
+        @keyframes parpadear {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .estrella:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .estrella:nth-child(2) { top: 20%; left: 80%; animation-delay: 0.5s; }
+        .estrella:nth-child(3) { top: 30%; left: 40%; animation-delay: 1s; }
+        .estrella:nth-child(4) { top: 40%; left: 70%; animation-delay: 1.5s; }
+        .estrella:nth-child(5) { top: 50%; left: 15%; animation-delay: 2s; }
+        .estrella:nth-child(6) { top: 60%; left: 90%; animation-delay: 0.3s; }
+        .estrella:nth-child(7) { top: 70%; left: 35%; animation-delay: 1.2s; }
+        .estrella:nth-child(8) { top: 80%; left: 60%; animation-delay: 0.8s; }
+        .estrella:nth-child(9) { top: 15%; left: 50%; animation-delay: 2.5s; }
+        .estrella:nth-child(10) { top: 25%; left: 10%; animation-delay: 1.8s; }
+        .estrella:nth-child(11) { top: 35%; left: 85%; animation-delay: 0.6s; }
+        .estrella:nth-child(12) { top: 45%; left: 25%; animation-delay: 2.2s; }
+        .estrella:nth-child(13) { top: 55%; left: 75%; animation-delay: 1.4s; }
+        .estrella:nth-child(14) { top: 65%; left: 45%; animation-delay: 0.9s; }
+        .estrella:nth-child(15) { top: 75%; left: 5%; animation-delay: 2.7s; }
+        .estrella:nth-child(16) { top: 85%; left: 95%; animation-delay: 1.1s; }
+        .estrella:nth-child(17) { top: 12%; left: 65%; animation-delay: 0.4s; }
+        .estrella:nth-child(18) { top: 22%; left: 30%; animation-delay: 1.9s; }
+        .estrella:nth-child(19) { top: 32%; left: 55%; animation-delay: 2.3s; }
+        .estrella:nth-child(20) { top: 42%; left: 88%; animation-delay: 0.7s; }
+
+        .estrella:nth-child(5n) {
+            width: 3px;
+            height: 3px;
+        }
+
+        .contenedor {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tarjeta {
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .encabezado-tarjeta {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+        .boton-volver {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .boton-volver:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<div class="estrellas">
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+    <div class="estrella"></div>
+</div>
+
+<div class="container contenedor">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card tarjeta">
+                <div class="card-header encabezado-tarjeta text-center py-4">
+                    <h2 class="mb-0">Resultados de la Consulta</h2>
+                    <p class="mb-0 mt-2">
+                        Fecha consultada: <strong th:text="${fecha}"></strong>
+                    </p>
+                </div>
+                <div class="card-body p-4">
+
+                    <!-- Si NO hay asteroides peligrosos -->
+                    <div th:if="${asteroides.isEmpty()}" class="alert alert-success text-center p-4">
+                        <h4>¡Buenas noticias!</h4>
+                        <p class="mb-0">
+                            No se han encontrado asteroides potencialmente peligrosos para esta fecha.
+                        </p>
+                    </div>
+
+                    <!-- Si SÍ hay asteroides peligrosos -->
+                    <div th:unless="${asteroides.isEmpty()}">
+
+                        <div class="alert alert-warning">
+                            <strong>Atención:</strong>
+                            Se encontraron <strong th:text="${asteroides.size()}"></strong>
+                            asteroide(s) potencialmente peligroso(s) para esta fecha.
+                        </div>
+
+                        <!-- Tabla de asteroides -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Diámetro Máx. (km)</th>
+                                    <th>Distancia Mínima (km)</th>
+                                    <th>Velocidad (km/h)</th>
+                                    <th>Peligroso</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="asteroide : ${asteroides}">
+                                    <td>
+                                        <strong th:text="${asteroide.nombre}"></strong>
+                                    </td>
+
+                                    <td>
+                                                <span th:if="${asteroide.diametroEstimado != null
+                                                            && asteroide.diametroEstimado.kilometros != null}">
+                                                    <span th:text="${#numbers.formatDecimal(
+                                                        asteroide.diametroEstimado.kilometros.diametroMaximoEstimado,
+                                                        1, 2)}">
+                                                    </span> km
+                                                </span>
+                                        <span th:unless="${asteroide.diametroEstimado != null
+                                                               && asteroide.diametroEstimado.kilometros != null}">
+                                                    N/D
+                                                </span>
+                                    </td>
+
+                                    <td>
+                                                <span th:if="${asteroide.datosAproximacion != null
+                                                            && !asteroide.datosAproximacion.isEmpty()}"
+                                                      th:text="${asteroide.datosAproximacion[0].distanciaPaso.kilometros} + ' km'">
+                                                </span>
+                                        <span th:unless="${asteroide.datosAproximacion != null
+                                                               && !asteroide.datosAproximacion.isEmpty()}">
+                                                    N/D
+                                                </span>
+                                    </td>
+
+                                    <td>
+                                                <span th:if="${asteroide.datosAproximacion != null
+                                                            && !asteroide.datosAproximacion.isEmpty()}"
+                                                      th:text="${asteroide.datosAproximacion[0].velocidadRelativa.kilometrosPorHora} + ' km/h'">
+                                                </span>
+                                        <span th:unless="${asteroide.datosAproximacion != null
+                                                               && !asteroide.datosAproximacion.isEmpty()}">
+                                                    N/D
+                                                </span>
+                                    </td>
+
+                                    <td>
+                                                <span th:if="${asteroide.esPotencialmentePeligroso}"
+                                                      class="badge bg-danger">
+                                                    Sí
+                                                </span>
+                                        <span th:unless="${asteroide.esPotencialmentePeligroso}"
+                                              class="badge bg-success">
+                                                    No
+                                                </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Botón para volver -->
+                    <div class="d-grid mt-4">
+                        <a href="/" class="btn boton-volver btn-lg">
+                            Realizar otra consulta
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card-footer text-center text-muted">
+                    <small>Datos proporcionados por NASA NeoWs API</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
